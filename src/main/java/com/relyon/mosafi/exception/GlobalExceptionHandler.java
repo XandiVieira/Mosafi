@@ -14,10 +14,18 @@ public class GlobalExceptionHandler {
     @ExceptionHandler(value = {ResourceNotFoundException.class})
     public ResponseEntity<Object> handleResourceNotFoundException(ResourceNotFoundException e) {
         HttpStatus notFound = HttpStatus.NOT_FOUND;
-        GlobalException globalException = new GlobalException(e.getMessage(),
-                e,
+        RequestException requestException = new RequestException(e.getMessage(),
                 notFound,
                 ZonedDateTime.now(ZoneId.of("Z")));
-        return new ResponseEntity<>(globalException, notFound);
+        return new ResponseEntity<>(requestException, notFound);
+    }
+
+    @ExceptionHandler(value = {AlreadyExistsException.class})
+    public ResponseEntity<Object> handleAlreadyExistsException(AlreadyExistsException e) {
+        HttpStatus notFound = HttpStatus.NOT_FOUND;
+        RequestException requestException = new RequestException(e.getMessage(),
+                notFound,
+                ZonedDateTime.now(ZoneId.of("Z")));
+        return new ResponseEntity<>(requestException, notFound);
     }
 }
