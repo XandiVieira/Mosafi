@@ -5,8 +5,6 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
-import javax.validation.constraints.NotBlank;
-import javax.validation.constraints.NotNull;
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
 
@@ -28,22 +26,16 @@ public class FinancialTransaction {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @NotBlank
     @Enumerated
     private FinancialTransactionType type;
 
-    @NotBlank
     private BigDecimal value;
 
-    @NotBlank
     private LocalDateTime date;
 
-    @NotNull
     @ManyToOne
     private Category category;
 
-    @NotNull
     @ManyToOne
     private User user;
-
 }

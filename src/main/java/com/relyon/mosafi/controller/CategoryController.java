@@ -16,8 +16,8 @@ public class CategoryController {
     private CategoryService categoryService;
 
     @PostMapping("/{category}")
-    public void createCategory(@PathVariable("category") String category) {
-        categoryService.createCustomCategory(category);
+    public ResponseEntity<Object> createCategory(@PathVariable("category") String category) {
+        return categoryService.createCustomCategory(category);
     }
 
     @GetMapping

@@ -4,6 +4,8 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotBlank;
+import java.util.ArrayList;
 import java.util.List;
 
 @Data
@@ -12,14 +14,17 @@ import java.util.List;
 @Table(name = "users")
 public class User {
 
-    public User(List<FinancialTransaction> financialTransactions) {
-        this.financialTransactions = financialTransactions;
-    }
-
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @OneToMany(mappedBy = "user")
-    private List<FinancialTransaction> financialTransactions;
+    @NotBlank
+    private String name;
+
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    private List<FinancialTransaction> financialTransactions = new ArrayList<>();
+
+    public void addNewFinancialTransaction(FinancialTransaction financialTransaction) {
+        financialTransactions.add(financialTransaction);
+    }
 }
