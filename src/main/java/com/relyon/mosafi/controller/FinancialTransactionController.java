@@ -24,6 +24,6 @@ public class FinancialTransactionController {
 
     @PostMapping
     public ResponseEntity<Object> createExpense(@RequestBody @Valid FinancialTransactionDto financialTransactionDto) {
-        return financialTransactionService.createExpanse(entityConverter.convertToEntity(financialTransactionDto));
+        return financialTransactionService.createExpanse(entityConverter.convertDinancialTransactionDtoToEntity(financialTransactionDto));
     }
 }

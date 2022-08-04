@@ -6,14 +6,13 @@ import org.springframework.http.HttpStatus;
 import java.time.ZonedDateTime;
 
 @Data
-public class RequestException {
+public class RequestExceptionDetails {
 
     private final String message;
-    //private Throwable throwable;
     private HttpStatus httpStatus;
     private ZonedDateTime timestamp;
 
-    public RequestException(String message, HttpStatus httpStatus, ZonedDateTime timestamp) {
+    public RequestExceptionDetails(String message, HttpStatus httpStatus, ZonedDateTime timestamp) {
         this.message = message;
         this.httpStatus = httpStatus;
         this.timestamp = timestamp;

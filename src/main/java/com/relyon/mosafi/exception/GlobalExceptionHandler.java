@@ -14,18 +14,27 @@ public class GlobalExceptionHandler {
     @ExceptionHandler(value = {ResourceNotFoundException.class})
     public ResponseEntity<Object> handleResourceNotFoundException(ResourceNotFoundException e) {
         HttpStatus notFound = HttpStatus.NOT_FOUND;
-        RequestException requestException = new RequestException(e.getMessage(),
+        RequestExceptionDetails requestExceptionDetails = new RequestExceptionDetails(e.getMessage(),
                 notFound,
                 ZonedDateTime.now(ZoneId.of("Z")));
-        return new ResponseEntity<>(requestException, notFound);
+        return new ResponseEntity<>(requestExceptionDetails, notFound);
     }
 
     @ExceptionHandler(value = {AlreadyExistsException.class})
-    public ResponseEntity<Object> handleAlreadyExistsException(AlreadyExistsException e) {
-        HttpStatus notFound = HttpStatus.NOT_FOUND;
-        RequestException requestException = new RequestException(e.getMessage(),
+    public ResponseEntity<Object> handleAlreadyExistsException(AlreadyExistsException ex) {
+        HttpStatus notFound = HttpStatus.CONFLICT;
+        RequestExceptionDetails requestExceptionDetails = new RequestExceptionDetails(ex.getMessage(),
                 notFound,
                 ZonedDateTime.now(ZoneId.of("Z")));
-        return new ResponseEntity<>(requestException, notFound);
+        return new ResponseEntity<>(requestExceptionDetails, notFound);
+    }
+
+    @ExceptionHandler(Exception.class)
+    public ResponseEntity<?> globleExcpetionHandler(Exception ex) {
+        HttpStatus internalServerError = HttpStatus.INTERNAL_SERVER_ERROR;
+        RequestExceptionDetails requestExceptionDetails = new RequestExceptionDetails(ex.getMessage(),
+                internalServerError,
+                ZonedDateTime.now(ZoneId.of("Z")));
+        return new ResponseEntity<>(requestExceptionDetails, internalServerError);
     }
 }
