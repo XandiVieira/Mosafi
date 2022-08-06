@@ -1,5 +1,6 @@
 package com.relyon.mosafi.configuration.security;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
@@ -11,6 +12,9 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 @Configuration
 public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
+    @Autowired
+    private UserDetailServiceImpl userDetailService;
+
     @Override
     protected void configure(HttpSecurity httpSecurity) throws Exception {
         httpSecurity
@@ -19,15 +23,14 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .authorizeHttpRequests()
                 .anyRequest().authenticated()
                 .and()
+                .antMatcher("api/v1/users")
                 .csrf().disable();
     }
 
     @Override
     protected void configure(AuthenticationManagerBuilder auth) throws Exception {
-        auth.inMemoryAuthentication()
-                .withUser("alexandre")
-                .password(passwordEncoder().encode("123456"))
-                .roles("ADMIN");
+        auth.userDetailsService(userDetailService)
+                .passwordEncoder(passwordEncoder());
     }
 
     @Bean

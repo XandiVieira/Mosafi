@@ -26,7 +26,7 @@ public class FinancialTransaction {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Enumerated
+    @Enumerated(EnumType.STRING)
     private FinancialTransactionType type;
 
     private BigDecimal value;
