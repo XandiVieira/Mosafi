@@ -21,8 +21,12 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
         httpSecurity.httpBasic()
                 .and()
                 .authorizeHttpRequests()
+<<<<<<< HEAD
                 .antMatchers(HttpMethod.POST, "/api/v1/users").permitAll()
                 .antMatchers(HttpMethod.GET, "/api/v1/categories").hasRole("ADMIN")
+=======
+                //.antMatcher("api/v1/users")
+>>>>>>> 0fa9c5c6af24be4976a273e0032ef513b5b50bab
                 .anyRequest().authenticated()
                 .and()
                 .csrf().disable();
