@@ -3,6 +3,7 @@ package com.relyon.mosafi.configuration.security;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.http.HttpMethod;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
@@ -17,13 +18,13 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Override
     protected void configure(HttpSecurity httpSecurity) throws Exception {
-        httpSecurity
-                .httpBasic()
+        httpSecurity.httpBasic()
                 .and()
                 .authorizeHttpRequests()
+                .antMatchers(HttpMethod.POST, "/api/v1/users").permitAll()
+                .antMatchers(HttpMethod.GET, "/api/v1/categories").hasRole("ADMIN")
                 .anyRequest().authenticated()
                 .and()
-                .antMatcher("api/v1/users")
                 .csrf().disable();
     }
 
